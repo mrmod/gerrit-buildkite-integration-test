@@ -1,0 +1,28 @@
+name: Create Change PR
+
+on:
+  push:
+    branches:
+      - gerrit-change/[0-9]+/1
+      # Merge branches
+      # - gerrit-change/[0-9]+/[0-9]+
+
+jobs:
+  create_pr_for_gerrit_change:
+    name: Create PR for Gerrit Change
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        # Deep fetch
+        fetch-depth: 0
+        # DONT USE: Ensure main is fetched too (can't caluculate a distance without more refs)
+        # ref: main
+    - name: Open Pull Reqeust
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: gh pr create --fill-verbose
