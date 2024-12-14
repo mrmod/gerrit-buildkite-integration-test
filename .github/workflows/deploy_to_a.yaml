@@ -20,4 +20,4 @@ jobs:
         with:
           token: '${{ github.token }}'
           environment: production
-          initial-status: success
+          initial-status: pending
